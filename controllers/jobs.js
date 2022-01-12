@@ -1,5 +1,5 @@
-const createJob = (req,res)=>{
-    res.send('create all jobs')
+const createJob = async(req,res)=>{
+    res.json(req.user)
 
 }
 

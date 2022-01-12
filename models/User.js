@@ -36,7 +36,7 @@ userSchema.methods.createJWT = function(){
 }
 
 userSchema.methods.comparePassword= async function (passwordcheck){
-  const isMatch = await bycrypt.compare(passwordcheck,this.password);
+  const isMatch = await bycrypt.compare(passwordcheck, this.password);
   return isMatch
 
 }
