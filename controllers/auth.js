@@ -1,7 +1,14 @@
 const User = require('../models/User')
+const {StatusCodes} = require('http-status-codes')
+const {BadRequestError} = require ('../errors')
 
 const register = async (req,res)=>{
-   res.send("register user");
+    const {name, email, password} =req.body
+    if(!name || !email || !password){
+        throw new BadRequestError('Please provide email, name, password')
+    }
+    const user = await User.create({...req.body}) //allows monogoose to do the validation
+    res.status(StatusCodes.CREATED).json(req.body)
 }
 
 const login = async (req, res) => {
