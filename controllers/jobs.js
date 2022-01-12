@@ -9,19 +9,29 @@ const createJob = async(req,res)=>{
 
 }
 
-const getJobs = (req, res) => {
-    res.send("get all jobs");
+const getJobs = async (req, res) => {
+    const jobs =await Job.find({createdBy:req.user.userId}).sort('createdAt') //jobs created by user
+    res.status(StatusCodes.OK).json({jobs, count:jobs.length})
 };
 
-const getSingleJob = (req, res) => {
-    res.send("get a job");
+const getSingleJob = async (req, res) => {
+    const {user:{userId }, params:{id:jobId}}=req
+    const job = await Job.findOne({_id:jobId, createdBy:userId})
+
+    if(!job){
+        throw new NotFoundError('No job found with this Id')
+    }
+
+   res.status(StatusCodes.OK).json({ job, count: job.length });
+
+ 
 };
 
-const updateJob = (req, res) => {
+const updateJob = async (req, res) => {
     res.send("update jobs");
 };
 
-const deleteJob = (req, res) => {
+const deleteJob = async (req, res) => {
     res.send("delete jobs");
 };
 
